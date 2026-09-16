@@ -132,6 +132,8 @@ void child3(){
 		child7();
 		exit(0);
 	}
+	
+	end_of_life_cleanup();
 }
 
 void child4(){
