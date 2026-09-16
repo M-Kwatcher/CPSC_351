@@ -12,7 +12,6 @@ void parent(){
 	}
 	else if (pid == 0){
 		// call child1()
-		std::cout << "Calling child1()\n";
 		child1();
 	}
 	else{
@@ -38,7 +37,6 @@ void child1(){
 		exit(-1);
 	}	
 	if (pid1 == 0) {
-		std::cout << "Calling child2\n";
 		child2();
 		exit(0); // Ensure child process exits after finishing
 	}
@@ -50,7 +48,6 @@ void child1(){
 		exit(-1);
 	}
 	if (pid2 == 0) {
-		std::cout << "Calling child3\n";
 		child3();
 		exit(0); // Ensure child process exits after finishing
 	}
