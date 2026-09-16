@@ -12,6 +12,10 @@ void error_logic(){
 	exit(-1);
 }
 
+void print_pid_info(){
+	std::cout << "I am child pid=" << getpid() << "; my parent is pid=" << getppid() << "\n";
+}
+
 void parent(){
 	pid_t pid;
 	pid = fork();
@@ -34,16 +38,19 @@ void parent(){
 }
 
 void child1(){
-	/* this function uses logic from gemini's pro model. Instead of using if, else if, else,
-	   gemini recommended a flat approach(using a singular if statement to check pid against
-	   fork() return values). This allows us to more easily trace the execution of parent vs
-	   child logic. In the child branch, we reach an exit(0) call that terminates the child's
-	   flow. The parent is the only one capable of reaching lines beyond each exit() call.*/	
+	/******************************************************************************************
+	 * this function uses logic from gemini's pro model. Instead of using if, else if, else,  *
+	 * gemini recommended a flat approach(using a singular if statement to check pid against  *
+	 * fork() return values). This allows us to more easily trace the execution of parent vs  *
+	 * child logic. In the child branch, we reach an exit(0) call that terminates the child's *
+	 * flow. The parent is the only one capable of reaching lines beyond each exit() call.    *
+	 ******************************************************************************************/	
 
 	pid_t my_pid = getpid();
 	pid_t parent_pid = getppid();
 
-	std::cout << "I am child pid=" << my_pid << "; my parent is pid=" << parent_pid << "\n";
+	//std::cout << "I am child pid=" << my_pid << "; my parent is pid=" << parent_pid << "\n";
+	print_pid_info();
 
 	// Fork Child 2
 	pid_t pid1 = fork();
@@ -58,8 +65,7 @@ void child1(){
 	// Fork Child 3 (executed by child1)
 	pid_t pid2 = fork();
 	if (pid2 < 0) {
-		std::cout << "Error occurred during fork() call\n";
-		exit(-1);
+		error_logic();
 	}
 	if (pid2 == 0) {
 		child3();
@@ -71,11 +77,11 @@ void child1(){
 }
 
 void child2(){
-	std::cout << "I am child2 pid=" << getpid() << "; my parent is pid=" << getppid() << "\n";
+	print_pid_info();
 	// need to call fork() twice 
 	// call exit(0) on child logic after invoking appropriate child() function
 	// call wait(NULL) twice before final exit(0) call below if logic
-/*
+
 	pid_t pid1 = fork();
 
 	if(pid1 < 0){
@@ -100,8 +106,46 @@ void child2(){
 	}
 	
 	end_of_life_cleanup();
-*/}
+}
 
 void child3(){
-	std::cout << "I am child3 pid=" << getpid() << "; my parent is pid=" << getppid() << "\n";
+	print_pid_info();
+
+	pid_t pid1 = fork();
+
+	if(pid1 < 0){
+		error_logic();
+	}
+
+	if(pid1 == 0){
+		child6();
+		exit(0);
+	}
+
+	pid_t pid2 = fork();
+
+	if(pid2 < 0){
+		error_logic();
+	}
+
+	if(pid2 == 0){
+		child7();
+		exit(0);
+	}
+}
+
+void child4(){
+	print_pid_info();
+}
+
+void child5(){
+	print_pid_info();
+}
+
+void child6(){
+	print_pid_info();
+}
+
+void child7(){
+	print_pid_info();
 }
