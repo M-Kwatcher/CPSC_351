@@ -38,13 +38,13 @@ void parent(){
 }
 
 void child1(){
-	/******************************************************************************************
-	 * this function uses logic from gemini's pro model. Instead of using if, else if, else,  *
-	 * gemini recommended a flat approach(using a singular if statement to check pid against  *
-	 * fork() return values). This allows us to more easily trace the execution of parent vs  *
-	 * child logic. In the child branch, we reach an exit(0) call that terminates the child's *
-	 * flow. The parent is the only one capable of reaching lines beyond each exit() call.    *
-	 ******************************************************************************************/	
+/******************************************************************************************
+ * this function uses logic from gemini's pro model. Instead of using if, else if, else,  *
+ * gemini recommended a flat approach(using a singular if statement to check pid against  *
+ * fork() return values). This allows us to more easily trace the execution of parent vs  *
+ * child logic. In the child branch, we reach an exit(0) call that terminates the child's *
+ * flow. The parent is the only one capable of reaching lines beyond each exit() call.    *
+ ******************************************************************************************/	
 
 	print_pid_info();
 
